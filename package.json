@@ -1,0 +1,26 @@
+{
+  "name": "airbnb-clone",
+  "version": "1.0.0",
+  "description": "Airbnb Clone made by a bunch of geniuses",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^3.10.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oooomair/Airbnb-Clone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oooomair/Airbnb-Clone/issues"
+  },
+  "homepage": "https://github.com/oooomair/Airbnb-Clone#readme"
+}
