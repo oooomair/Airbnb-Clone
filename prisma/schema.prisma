@@ -11,100 +11,111 @@ datasource db {
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  email             String   @unique
-  firstName         String   @db.VarChar(25)
-  LastName          String   @db.VarChar(25)  
-  profilePicture    String?  
-  description       String?  
-  accommodations    Accommodation[]
-  bookings          Booking[]
-  reviews           Review[]
-  favorite          Favorite[]
+  id             Int             @id @default(autoincrement())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  email          String          @unique
+  firstName      String          @db.VarChar(25)
+  LastName       String          @db.VarChar(25)
+  profilePicture String?
+  description    String?
+  accommodations Accommodation[]
+  bookings       Booking[]
+  reviews        Review[]
+  favorite       Favorite[]
 }
 
 model Accommodation {
-  id                Int      @id @default(autoincrement())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  title             String   
-  description       String   
-  price             Float
-  location          String   
-  user              User     @relation(fields: [userId], references: [id])
-  userId            Int
-  listing           Listing?
-  reviews           Review[]
-  favorites         Favorite[]
-  amenities         Amenity[]
+  id          Int        @id @default(autoincrement())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  title       String
+  description String
+  price       Float
+  location    String
+  user        User       @relation(fields: [userId], references: [id])
+  userId      Int
+  listing     Listing?
+  reviews     Review[]
+  favorites   Favorite[]
+  amenities   Amenity[]
+  photos      Photo[]
 }
 
 model Listing {
-  id                    Int           @id @default(autoincrement())
-  createdAt             DateTime      @default(now())
-  updatedAt             DateTime      @updatedAt
-  availabilityStart     DateTime 
-  availabilityEnd       DateTime   
-  recurring             Boolean
-  activeListing         Boolean
-  price                 Float   
-  accommodation         Accommodation @relation(fields: [accommodationId], references: [id])
-  accommodationId       Int
-  bookings               Booking[]
+  id                Int           @id @default(autoincrement())
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  availabilityStart DateTime
+  availabilityEnd   DateTime
+  recurring         Boolean
+  activeListing     Boolean
+  price             Float
+  accommodation     Accommodation @relation(fields: [accommodationId], references: [id])
+  accommodationId   Int           @unique
+  bookings          Booking[]
 }
 
 model Booking {
-  id                    Int      @id @default(autoincrement())
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  bookedDateStart       DateTime 
-  bookedDateEnd         DateTime   
-  confirmed             Boolean
-  listing               Listing @relation(fields: [listingId], references: [id])
-  user                  User @relation(fields: [userId], references: [id])
-  listingId             Int
-  userId                Int
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  bookedDateStart DateTime
+  bookedDateEnd   DateTime
+  confirmed       Boolean
+  listing         Listing  @relation(fields: [listingId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
+  listingId       Int
+  userId          Int
 }
 
 model Favorite {
-  id                    Int      @id @default(autoincrement())
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  user                  User @relation(fields: [userId], references: [id])
-  accommodation         Accommodation @relation(fields: [accommodationId], references: [id])
-  userId                Int
-  accommodationId       Int
+  id              Int           @id @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  user            User          @relation(fields: [userId], references: [id])
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+  userId          Int
+  accommodationId Int
 }
 
 model Review {
-  id                    Int      @id @default(autoincrement())
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  rating                Int 
-  comment               String   @db.VarChar(50)   
-  user                  User @relation(fields: [userId], references: [id])
-  accommodation         Accommodation @relation(fields: [accommodationId], references: [id])
-  userId                Int
-  accommodationId       Int
+  id              Int           @id @default(autoincrement())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  rating          Int
+  comment         String        @db.VarChar(50)
+  user            User          @relation(fields: [userId], references: [id])
+  accommodation   Accommodation @relation(fields: [accommodationId], references: [id])
+  userId          Int
+  accommodationId Int
 }
 
 model AmenitiesCategory {
-  id                    Int      @id @default(autoincrement())
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  name                  String  
-  amenities             Amenity[]
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  name      String
+  amenities Amenity[]
 }
 
 model Amenity {
-  id                    Int      @id @default(autoincrement())
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  name                  String     
-  accommodation         Accommodation @relation(fields: [accommodationId], references: [id])
-  amenitiesCategory     AmenitiesCategory @relation(fields: [amenitiesCategoryId], references: [id])
-  accommodationId       Int
-  amenitiesCategoryId   Int
+  id                  Int               @id @default(autoincrement())
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  name                String
+  accommodation       Accommodation     @relation(fields: [accommodationId], references: [id])
+  amenitiesCategory   AmenitiesCategory @relation(fields: [amenitiesCategoryId], references: [id])
+  accommodationId     Int
+  amenitiesCategoryId Int
+}
+
+model Photo {
+  id              Int            @id @default(autoincrement())
+  defaultName     String?
+  url             String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  Accommodation   Accommodation? @relation(fields: [accommodationId], references: [id])
+  accommodationId Int?
 }
